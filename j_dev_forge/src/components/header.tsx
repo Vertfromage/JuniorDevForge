@@ -69,6 +69,9 @@ export default function Header() {
           <li className={styles.navItem}>
             <Link href="/">Home</Link>
           </li>
+-         <li className={styles.navItem}>
+            <Link href="/new">Add Pet</Link>
+          </li>
           <li className={styles.navItem}>
             <Link href="/client">Client</Link>
           </li>
