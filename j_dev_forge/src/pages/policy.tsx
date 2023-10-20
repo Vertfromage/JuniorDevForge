@@ -1,13 +1,13 @@
 /* Example File from https://github.com/nextauthjs/next-auth-example*//* Example File from https://github.com/nextauthjs/next-auth-example*/
 
+import Link from "next/link"
 import Layout from "../components/layout"
 
 export default function PolicyPage() {
   return (
     <Layout>
       <p>
-        This is an example site to demonstrate how to use{" "}
-        <a href="https://next-auth.js.org">NextAuth.js</a> for authentication.
+        This is an example site to demonstrate how to use <Link href={"https://next-auth.js.org"}>NextAuth.js</Link> for authentication.
       </p>
       <h2>Terms of Service</h2>
       <p>

@@ -2,6 +2,7 @@
 
 import Layout from "../components/layout"
 import Link from 'next/link'
+// import Image from "next/image"
 import dbConnect from '../lib/dbConnect'
 import Pet, { Pets } from '../models/Pet'
 import { GetServerSideProps } from 'next'
@@ -26,6 +27,7 @@ const IndexPage = ({ pets }: Props) => {
         <div key={pet._id}>
           <div className="card">
             <img src={pet.image_url} />
+            {/* <Image src={"pet.image_url"} alt={""}></Image> */}
             <h5 className="pet-name">{pet.name}</h5>
             <div className="main-content">
               <p className="pet-name">{pet.name}</p>

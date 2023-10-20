@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+// import Image from 'next/image'
 import dbConnect from '../../lib/dbConnect'
 import Pet, { Pets } from '../../models/Pet'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
@@ -34,7 +35,8 @@ const PetPage = ({ pet }: Props) => {
   return (
     <div key={pet._id}>
       <div className="card">
-        <img src={pet.image_url} />
+      <img src={pet.image_url} />
+      {/* <Image src={"pet.image_url"} alt={pet.name+"'s picture"}></Image> */}
         <h5 className="pet-name">{pet.name}</h5>
         <div className="main-content">
           <p className="pet-name">{pet.name}</p>
