@@ -69,9 +69,12 @@ export default function Header() {
           <li className={styles.navItem}>
             <Link href="/">Home</Link>
           </li>
--         <li className={styles.navItem}>
-            <Link href="/new">Add Pet</Link>
+      {/* Pets Example */}
+          <li className={styles.navItem}>
+            <Link href="/pets">Pets</Link>
           </li>
+      {/* Pets Example */}
+      {/* NextAuth Example */}
           <li className={styles.navItem}>
             <Link href="/client">Client</Link>
           </li>
@@ -90,6 +93,7 @@ export default function Header() {
           <li className={styles.navItem}>
             <Link href="/me">Me</Link>
           </li>
+      {/* NextAuth Example */}
         </ul>
       </nav>
     </header>
