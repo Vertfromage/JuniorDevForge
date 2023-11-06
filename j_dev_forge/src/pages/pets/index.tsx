@@ -14,20 +14,6 @@ type Props = {
 }
 
 const IndexPage = ({ pets }: Props) => {
-  const router = useRouter()
-  const [message, setMessage] = useState('')
-  const handleDelete = async () => {
-    const petID = router.query.id
-
-    try {
-      await fetch(`/api/pets/${petID}`, {
-        method: 'DELETE',
-      })
-      router.push('/')
-    } catch (error) {
-      setMessage('Failed to delete the pet.')
-    }
-  }
   return (
     <Layout>
       <h1>with-mongodb-mongoose Example</h1>
@@ -69,15 +55,9 @@ const IndexPage = ({ pets }: Props) => {
               </div>
 
               <div className="btn-container">
-                <Link href={{ pathname: 'pets/[id]/edit', query: { id: pet._id } }}>
-                  <button className="btn edit">Edit</button>
-                </Link>
                 <Link href={{ pathname: 'pets/[id]', query: { id: pet._id } }}>
-                  <button className="btn view">View</button>
+                  <button className="btn view">Page</button>
                 </Link>
-                <button className="btn delete" onClick={handleDelete}>
-                Delete
-                </button>
               </div>
             </div>
           </div>
@@ -95,7 +75,7 @@ const IndexPage = ({ pets }: Props) => {
   )
 }
 
-/* Retrieves pet(s) data from mongodb database */
+/* Retrieves all pets data from mongodb database */
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   await dbConnect()
 
