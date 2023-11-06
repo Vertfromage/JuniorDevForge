@@ -83,10 +83,23 @@ git push origin branchName
 
 Whenever main is updated make sure you bring those changes into your branch and resolve any conflicts, this will reduce conflicts overall
 ```bash
+git checkout main
+git pull
 git checkout branchName
+git pull
 git merge origin/main
+git push
 ```
 If you're feeling brave you can use rebase: https://www.atlassian.com/git/tutorials/merging-vs-rebasing
+
+```bash
+git checkout main
+git pull
+git checkout branchName
+git pull
+git rebase main
+git push
+```
 
 # When ready to merge to main:
 - Check that it passes the lint tests
