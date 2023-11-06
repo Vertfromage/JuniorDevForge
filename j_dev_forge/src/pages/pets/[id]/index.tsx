@@ -35,10 +35,10 @@ const PetPage = ({ pet }: Props) => {
 
   return (
     <Layout>
-    <h1>{pet.name}'s Page</h1>
+    <h1>{pet.name}&apos;s Page</h1>
     <div key={pet._id}>
       <div className="card">
-      <img src={pet.image_url} />
+      <img src={pet.image_url} alt='Pet image' />
       {/* <Image src={"pet.image_url"} alt={pet.name+"'s picture"}></Image> */}
         <h5 className="pet-name">{pet.name}</h5>
         <div className="main-content">

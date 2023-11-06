@@ -6,8 +6,6 @@ import Link from 'next/link'
 import dbConnect from '../../lib/dbConnect'
 import Pet, { Pets } from '../../models/Pet'
 import { GetServerSideProps } from 'next'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
 
 type Props = {
   pets: Pets[]
@@ -29,7 +27,7 @@ const IndexPage = ({ pets }: Props) => {
       {pets && pets.map((pet) => (
         <div key={pet._id}>
           <div className="card">
-            <img src={pet.image_url} />
+            <img src={pet.image_url} alt="Pet Image" />
             {/* <Image src={"pet.image_url"} alt={""}></Image> */}
             <h5 className="pet-name">{pet.name}</h5>
             <div className="main-content">
