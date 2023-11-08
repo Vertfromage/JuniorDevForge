@@ -1,5 +1,5 @@
-import Layout from '../components/layout'
-import Form from '../components/Form'
+import Layout from '../../components/layout'
+import Form from '../../components/Form'
 
 const NewPet = () => {
   const petForm = {

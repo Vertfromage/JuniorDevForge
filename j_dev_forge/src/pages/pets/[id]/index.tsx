@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 // import Image from 'next/image'
-import dbConnect from '../../lib/dbConnect'
-import Pet, { Pets } from '../../models/Pet'
+import dbConnect from '../../../lib/dbConnect'
+import Pet, { Pets } from '../../../models/Pet'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
+import Layout from '@/components/layout'
 
 interface Params extends ParsedUrlQuery {
   id: string
@@ -26,16 +27,18 @@ const PetPage = ({ pet }: Props) => {
       await fetch(`/api/pets/${petID}`, {
         method: 'Delete',
       })
-      router.push('/')
+      router.push('/pets')
     } catch (error) {
       setMessage('Failed to delete the pet.')
     }
   }
 
   return (
+    <Layout>
+    <h1>{pet.name}&apos;s Page</h1>
     <div key={pet._id}>
       <div className="card">
-      <img src={pet.image_url} />
+      <img src={pet.image_url} alt='Pet image' />
       {/* <Image src={"pet.image_url"} alt={pet.name+"'s picture"}></Image> */}
         <h5 className="pet-name">{pet.name}</h5>
         <div className="main-content">
@@ -61,7 +64,7 @@ const PetPage = ({ pet }: Props) => {
           </div>
 
           <div className="btn-container">
-            <Link href={`/${pet._id}/edit`}>
+            <Link href={`pets/${pet._id}/edit`}>
               <button className="btn edit">Edit</button>
             </Link>
             <button className="btn delete" onClick={handleDelete}>
@@ -72,6 +75,7 @@ const PetPage = ({ pet }: Props) => {
       </div>
       {message && <p>{message}</p>}
     </div>
+     </Layout>
   )
 }
 
