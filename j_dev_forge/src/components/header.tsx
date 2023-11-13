@@ -91,7 +91,7 @@ export default function Header() {
             <Link href="/admin">Admin</Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="/me">Me</Link>
+            <Link href="/profile">Profile</Link>
           </li>
       {/* NextAuth Example */}
         </ul>
