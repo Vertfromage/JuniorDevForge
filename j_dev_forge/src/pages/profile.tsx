@@ -1,11 +1,11 @@
 /* Example File from https://github.com/nextauthjs/next-auth-example*/
 
 import { useSession } from "next-auth/react"
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Layout from "../components/layout"
 import Image from 'next/image' //https://nextjs.org/docs/pages/api-reference/components/image
 import AccessDenied from "@/components/access-denied"
-import { useRouter } from 'next/router';
+import Link from "next/link"
 
 export default function Profile() {
   const { data } = useSession()
@@ -15,16 +15,16 @@ export default function Profile() {
   const fetchData = async (email: string) => {
     try {
       if (!email) {
-        console.error('Missing email parameter');
+        console.error('Missing email parameter')
         return;
       }
 
-      const response = await fetch(`/api/users?email=${email}`);
+      const response = await fetch(`/api/users?email=${email}`)
       if (!response.ok) {
-        throw new Error('Failed to fetch user data');
+        throw new Error('Failed to fetch user data')
       }
 
-      const data = await response.json();
+      const data = await response.json()
 
       if(data.length>0){
         isRegistered = true
@@ -62,7 +62,7 @@ export default function Profile() {
       alt="Picture of the user"
     />
     {/* Try to get extra info from mongoDB */}
-    {isRegistered? (<div>
+    {isRegistered ? (<div>
       {/* If it does exist show edit option */}
       <p>Thank you for registering</p>
       <p>{JSON.stringify(userData)}</p>
@@ -70,6 +70,9 @@ export default function Profile() {
     ( (<div>
       {/* If it doesn't exist prompt for registration */}
           <p>Please register...</p>
+          <Link href={`users/new`}>
+              <button className="btn edit">Set Up Profile!</button>
+          </Link>
         </div>)
         ) : (
           <div>

@@ -24,6 +24,7 @@ export interface User extends mongoose.Document {
     email:string
     firstName:string
     lastName?:string
+    imageUrl?:string
     role: string
     profile: Profile
 }
