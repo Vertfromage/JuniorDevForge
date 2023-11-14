@@ -16,7 +16,7 @@ export default async function handler(
     await dbConnect()
 
     switch (method) {
-        case 'GET': //Get a payment by its ID
+        case 'GET': //Get a payment by its transaction ID
             try{
                 let payment;
                 if(id){
@@ -33,7 +33,7 @@ export default async function handler(
                 res.status(400).json({ success: false });
             }
             break
-        case 'PUT': //Edit a payment by its ID
+        case 'PUT': //Edit a payment by its transaction ID
             try{
                 const payment = await Payment.findByIdAndUpdate(id, req.body, {
                     new: true,
@@ -47,7 +47,7 @@ export default async function handler(
                 res.status(400).json({ success: false })
             }
             break
-        case 'DELETE': //Delete a payment by its ID
+        case 'DELETE': //Delete a payment by its transaction id
             try {
                 const deletedPayment = await Payment.deleteOne({ _id: id })
                 if(!deletedPayment) {

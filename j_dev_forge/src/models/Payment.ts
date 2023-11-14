@@ -8,7 +8,6 @@ function validateURL(value: string) {
 export interface Payment extends mongoose.Document {
     transaction_id: string
     project_id: mongoose.Types.ObjectId; //References Projects
-    user_id: mongoose.Types.ObjectId; //References Users
     amount: number
     time_stamp: Date
 }
@@ -22,11 +21,6 @@ const PaymentSchema = new mongoose.Schema<Payment>({
     project_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Projects', //Reference to the Projects model
-        required: true,
-    },
-    user_id:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users', //Reference to the Users model
         required: true,
     },
     amount:{
