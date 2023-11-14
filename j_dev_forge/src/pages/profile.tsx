@@ -7,10 +7,26 @@ import Image from 'next/image' //https://nextjs.org/docs/pages/api-reference/com
 import AccessDenied from "@/components/access-denied"
 import Link from "next/link"
 
+interface UserData {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  city: string;
+  province: string;
+  description: string;
+  website: string;
+  projects: any[];
+  linkedIn: string;
+  github: string;
+  reviews: any[];
+}
+
 export default function Profile() {
   const { data } = useSession()
-  const [userData, setUserData] = useState(null);
-  var isRegistered = false
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [isRegistered, setIsRegistered] = useState(false)
 
   const fetchData = async (email: string) => {
     try {
@@ -24,20 +40,18 @@ export default function Profile() {
         throw new Error('Failed to fetch user data')
       }
 
-      const data = await response.json()
+      const res = await response.json()
 
-      if(data.length>0){
-        isRegistered = true
+      if(res.data[0]){
+        setIsRegistered(true)
       }
-      setUserData(data.data);
+      setUserData(res.data[0]);
           
     } catch (error) {
       console.error(error);
     }
   };
-
-
-  console.log(data)
+  
     // If no session exists, display access denied message
     if (!data) {
       return (
@@ -49,29 +63,37 @@ export default function Profile() {
       const email = data?.user?.email || ""
       fetchData(email)
     }
-
-    
-  
+    console.log(isRegistered)
   return (
     <Layout>
-      <h2>{data?.user?.name} | {data?.user?.email}</h2>
+      <h1>{data?.user?.name} | {data?.user?.email}</h1>
       <Image
       src={data?.user?.image||""}
-      width={200}
-      height={200}
+      width={100}
+      height={100}
       alt="Picture of the user"
     />
     {/* Try to get extra info from mongoDB */}
-    {isRegistered ? (<div>
+    {isRegistered && userData ? (<div>
       {/* If it does exist show edit option */}
-      <p>Thank you for registering</p>
-      <p>{JSON.stringify(userData)}</p>
+      <div>
+        <h2>{userData?.city}, {userData?.province}</h2>
+        <h3> {userData?.description}</h3>
+        <p><strong>Email:</strong> {userData?.email}</p>
+        <p><strong>Role:</strong> {userData?.role}</p>   
+        <p><strong>Website:</strong> <a href={userData?.website}>{userData?.website}</a></p>
+        <p><strong>LinkedIn:</strong> <a href={userData?.linkedIn}>{userData?.linkedIn}</a></p>
+        <p><strong>GitHub:</strong> <a href={userData?.github}>{userData?.github}</a></p>
+          <Link href={`users/`+(userData?._id)+`/edit`}>
+              <button className="btn edit">Edit Profile!</button>
+          </Link>
+      </div>
     </div>):(userData ? 
     ( (<div>
       {/* If it doesn't exist prompt for registration */}
           <p>Please register...</p>
           <Link href={`users/new`}>
-              <button className="btn edit">Set Up Profile!</button>
+              <button className="btn new">Set Up Profile!</button>
           </Link>
         </div>)
         ) : (

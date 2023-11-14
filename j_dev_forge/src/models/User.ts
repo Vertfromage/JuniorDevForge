@@ -1,22 +1,10 @@
 import mongoose from 'mongoose'
 import validator from 'validator' //https://www.npmjs.com/package/validator
 
+// If we use this currently no url is not acceptable...
 function validateURL(value: string) {
+    console.log("Ran url validator")
     return validator.isURL(value, { require_tld: false })
-}
-
-// Most of profile is optional // note: ? means it can be null
-export interface Profile {
-    city?:string
-    province?:string
-    description?:string
-    website?:string
-    projects?:string[]
-    socialMedia: {
-        linkedIn?:string 
-        github?:string
-    }
-    reviews?:string[]
 }
 
 export interface User extends mongoose.Document {
@@ -26,7 +14,14 @@ export interface User extends mongoose.Document {
     lastName?:string
     imageUrl?:string
     role: string
-    profile: Profile
+    city?:string
+    province?:string
+    description?:string
+    website?:string
+    projects?:string[]
+    linkedIn?:string 
+    github?:string
+    reviews?:string[]
 }
 
 const UserSchema = new mongoose.Schema<User>({
@@ -50,46 +45,45 @@ const UserSchema = new mongoose.Schema<User>({
         required: [true, 'Please define the role of user!'],
         maxlength: [20, 'role cannot be more than 20 characters'],
       },
-    profile: {
-        city:{
-            type: String
-        },
-        province:{
-            type: String
-        },
-        description:{
-            type: String
-        },
-        website:{
-            type: String,
-            validate: {
-                validator: validateURL,
-                message: 'Invalid URL format',
-              }
-        },
-        projects:{
-            type: [String] // should be the project._id
-        },
-        socialMedia: {
-            linkedIn:{
-                type: String,
-                validate: {
-                    validator: validateURL,
-                    message: 'Invalid URL format',
-                  }
-            },
-            github:{
-                type: String,
-                validate: {
-                    validator: validateURL,
-                    message: 'Invalid URL format',
-                  }
-            },
-        },
-        reviews:{
-            type: [String]
-        },
-    }
+    city:{
+        type: String,
+        maxlength: 20 
+    },
+    province:{
+        type: String,
+        maxlength: 20 
+    },
+    description:{
+        type: String,
+        maxlength: 250 
+    },
+    website:{
+        type: String,
+        validate: {
+            validator: validateURL,
+            message: 'Invalid URL format',
+            }
+    },
+    projects:{
+        type: [String] // should be the project._id
+    },
+    linkedIn:{
+        type: String,
+        validate: {
+            validator: validateURL,
+            message: 'Invalid URL format',
+            }
+    },
+    github:{
+        type: String,
+        validate: {
+            validator: validateURL,
+            message: 'Invalid URL format',
+            }
+    },
+    reviews:{
+        type: [String]
+    },
     
 })
 

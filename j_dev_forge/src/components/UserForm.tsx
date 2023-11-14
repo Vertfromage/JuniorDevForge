@@ -53,34 +53,14 @@ const Form = ({ formId, userForm, forNewUser = true }: Props) => {
   const putData = async (form: FormData) => {
     const { id } = router.query
 
-    const user = {
-      email : form.email,
-      firstName: form.firstName,
-      lastName: form.lastName,
-      imageUrl: form.image_url,
-      role: form.role,
-      profile: {
-        city: form.city,
-        province: form.province,
-        description: form.description,
-        website: form.website,
-        //projects: [],
-        socialMedia: {
-          linkedIn: form.linkedIn,
-          github: form.github,
-        },     
-        //reviews:[]   
-      }
-    }
-
     try {
-      const res = await fetch(`/api/Users/${id}`, {
+      const res = await fetch(`/api/users/${id}`, {
         method: 'PUT',
         headers: {
           Accept: contentType,
           'Content-Type': contentType,
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(form),
       })
 
       // Throw error with status code in case Fetch API req failed
@@ -90,8 +70,8 @@ const Form = ({ formId, userForm, forNewUser = true }: Props) => {
 
       const { data } = await res.json()
 
-      mutate(`/api/Users/${id}`, data, false) // Update the local data without a revalidation
-      router.push('/')
+      mutate(`/api/users/${id}`, data, false) // Update the local data without a revalidation
+      router.push('/profile')
     } catch (error) {
       setMessage('Failed to update User')
     }
@@ -99,34 +79,15 @@ const Form = ({ formId, userForm, forNewUser = true }: Props) => {
 
   /* The POST method adds a new entry in the mongodb database. */
   const postData = async (form: FormData) => {
-    const user = {
-      email : form.email,
-      firstName: form.firstName,
-      lastName: form.lastName,
-      imageUrl: form.image_url,
-      role: form.role,
-      profile: {
-        city: form.city,
-        province: form.province,
-        description: form.description,
-        website: form.website,
-        //projects: [],
-        socialMedia: {
-          linkedIn: form.linkedIn,
-          github: form.github,
-        },     
-        //reviews:[]   
-      }
-    }
 
     try {
-      const res = await fetch('/api/Users', {
+      const res = await fetch('/api/users', {
         method: 'POST',
         headers: {
           Accept: contentType,
           'Content-Type': contentType,
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(form),
       })
 
       // Throw error with status code in case Fetch API req failed
@@ -134,27 +95,12 @@ const Form = ({ formId, userForm, forNewUser = true }: Props) => {
         throw new Error(res.status.toString())
       }
 
-      router.push('/')
+      router.push('/profile')
     } catch (error) {
-      setMessage('Failed to add User')
+      console.log(error)
+      setMessage('Failed to add user')
     }
   }
-
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => {
-  //   const target = e.target
-  //   const value =
-  //     target.name === 'role'
-  //       ? (target as HTMLInputElement).checked
-  //       : target.value
-  //   const name = target.name
-
-  //   setForm({
-  //     ...form,
-  //     [name]: value,
-  //   })
-  // }
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -199,47 +145,8 @@ const Form = ({ formId, userForm, forNewUser = true }: Props) => {
     <>
       
       <form id={formId} onSubmit={handleSubmit}>
-      <h1>Hello {form.firstName} {form.lastName},</h1>
+      <h1>Hello {form.firstName} {form.lastName}, {form.email}</h1>
       <p>We need some information for your profile!</p>
-        {/* <label htmlFor="first_name">First Name</label>
-        <input
-          type="text"
-          maxLength={20}
-          name="firstName"
-          value={form.firstName}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="last_name">Last Name</label>
-        <input
-          type="text"
-          maxLength={20}
-          name="lastName"
-          value={form.lastName}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          maxLength={30}
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="image_url">Image Url</label>
-        <input
-          type="text"
-          name="image_url"
-          maxLength={30}
-          value={form.image_url}
-          onChange={handleChange}
-        /> */}
-
         <select
           id="role"
           name="role"
@@ -276,7 +183,14 @@ const Form = ({ formId, userForm, forNewUser = true }: Props) => {
           value={form.description}
           onChange={handleChange}
         />
-
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          name="website"
+          maxLength={60}
+          value={form.website}
+          onChange={handleChange}
+        />
         <label htmlFor="linkedIn">LinkedIn</label>
         <input
           type="text"
