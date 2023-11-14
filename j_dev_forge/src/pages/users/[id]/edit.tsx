@@ -11,32 +11,6 @@ const fetcher = (url: string) =>
     .then((json) => json.data)
 
 const EditUser = () => {
-    const { data } = useSession()
-
-    if (!data) {
-      return (
-        <Layout>
-          <AccessDenied />
-        </Layout>
-      )
-    }
-
-    
-  const name = data?.user?.name
-  const email = data?.user?.email
-  const photo = data?.user?.image
-
-  // Make sure values aren't null
-  if(!name||!email||!photo){
-    return (
-      <Layout>
-        <div><p>Name, email, photo...</p></div>
-      </Layout>
-    )
-  }
-  // split name returned by github into first and last
-  const splitName = name.split(" ")
-
   const router = useRouter()
   const { id } = router.query
   const {
@@ -45,11 +19,34 @@ const EditUser = () => {
     isLoading,
   } = useSWR(id ? `/api/users/${id}` : null, fetcher)
 
+  const { data } = useSession()
+
   if (error) return <p>Failed to load</p>
   if (isLoading) return <p>Loading...</p>
   if (!user) return null
 
+  if (!data) {
+    return (
+      <Layout>
+        <AccessDenied />
+      </Layout>
+    )
+  }
+  
+const name = data?.user?.name
+const email = data?.user?.email
+const photo = data?.user?.image
 
+// Make sure values aren't null
+if(!name||!email||!photo){
+  return (
+    <Layout>
+      <div><p>Name, email, photo...</p></div>
+    </Layout>
+  )
+}
+// split name returned by github into first and last
+const splitName = name.split(" ")
 
   const userForm = {
     firstName: splitName[0],
