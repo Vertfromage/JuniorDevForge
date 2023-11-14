@@ -27,6 +27,7 @@ export default function Profile() {
   const { data } = useSession()
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isRegistered, setIsRegistered] = useState(false)
+  const [ok, setOk] = useState(false)
 
   const fetchData = async (email: string) => {
     try {
@@ -46,7 +47,7 @@ export default function Profile() {
         setIsRegistered(true)
       }
       setUserData(res.data[0]);
-          
+      setOk(true)
     } catch (error) {
       console.error(error);
     }
@@ -88,7 +89,7 @@ export default function Profile() {
               <button className="btn edit">Edit Profile!</button>
           </Link>
       </div>
-    </div>):(userData ? 
+    </div>):(ok ? 
     ( (<div>
       {/* If it doesn't exist prompt for registration */}
           <p>Please register...</p>
