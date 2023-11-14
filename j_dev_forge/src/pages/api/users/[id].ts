@@ -9,7 +9,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const {
-    query: { id },
+    query: { id, email },
     method,
   } = req
 
@@ -17,14 +17,23 @@ export default async function handler(
 
   switch (method) {
     case 'GET' /* Get a model by its ID */:
+      case 'GET':
       try {
-        const user = await User.findById(id)
-        if (!user) {
-          return res.status(400).json({ success: false })
+        let user;
+        if (id) {
+          user = await User.findById(id);
+        } else if (email) {
+          user = await User.findOne({ email });
+        } else {
+          return res.status(400).json({ success: false, message: 'Missing id or email parameter' });
         }
-        res.status(200).json({ success: true, data: user })
+
+        if (!user) {
+          return res.status(400).json({ success: false });
+        }
+        res.status(200).json({ success: true, data: user });
       } catch (error) {
-        res.status(400).json({ success: false })
+        res.status(400).json({ success: false });
       }
       break
 
@@ -60,3 +69,4 @@ export default async function handler(
       break
   }
 }
+
