@@ -10,6 +10,9 @@ export default function Footer() {
       <hr />
       <ul className={styles.navItems}>
         <li className={styles.navItem}>
+            <Link href="/dev_resources">Dev Resources</Link>
+        </li>
+        <li className={styles.navItem}>
           <a href="https://next-auth.js.org">NEXT-Auth Docs</a>
         </li>
         <li className={styles.navItem}>
