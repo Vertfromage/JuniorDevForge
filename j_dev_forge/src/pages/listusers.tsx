@@ -8,11 +8,11 @@ interface User {
   firstName: string;
   lastName?: string;
   role: string;
-  // Add other fields as needed
 }
 
 const ListUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
     // Fetch users when the component mounts
@@ -29,10 +29,24 @@ const ListUsers = () => {
     fetchUsers();
   }, []);
 
+  const filteredUsers = users.filter(user =>
+    user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (user.lastName && user.lastName.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
   return (
     <Layout>
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
       <h1>Users</h1>
-      {users.map((user) => (
+      {filteredUsers.map((user) => (
         <div key={user._id}>
           <div className="card">
             <div className="content">

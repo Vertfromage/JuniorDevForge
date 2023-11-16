@@ -192,3 +192,7 @@ li {
 .confirmation-box.show {
   display: block;
 }
+
+.profile-field {
+  font-weight: bold;
+}
