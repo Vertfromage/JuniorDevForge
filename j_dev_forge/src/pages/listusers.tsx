@@ -37,7 +37,7 @@ const ListUsers = () => {
           <div className="card">
             <div className="content">
               <h5 className="user-name">{user.firstName} {user.lastName}</h5>
-              <p className="email">Email: {user.email}</p>
+              {/* <p className="email">Email: {user.email}</p> */}
               <p className="role">Role: {user.role}</p>
 
               <div className="btn-container">

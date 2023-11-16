@@ -85,9 +85,14 @@
   margin-bottom: 2rem;
   padding: 0;
   list-style: none;
+  border-bottom: 1px solid;
 }
 
 .navItem {
   display: inline-block;
   margin-right: 1rem;
+}
+
+.navItem a {
+  text-decoration: none;
 }
