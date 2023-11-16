@@ -8,13 +8,14 @@ interface Props {
 }
 
 const UserProfile = ({ user }: Props) => {
+  console.log(user)
   return (
     <Layout>
-      <h1>{user.firstName} {user.lastName}'s Profile</h1>
+      <h1>{user.firstName} {user.lastName}&apos;s Profile</h1>
       <div className="card">
         <div className="content">
           <p className="user-name">{user.firstName} {user.lastName}</p>
-          <p className="email">Email: {user.email}</p>
+          {/* <p className="email">Email: {user.email}</p> */}
           <p className="role">Role: {user.role}</p>
           <p className="city">City: {user.city}</p>
           <p className="province">Province: {user.province}</p>
