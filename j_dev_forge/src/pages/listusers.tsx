@@ -8,6 +8,8 @@ interface User {
   firstName: string;
   lastName?: string;
   role: string;
+  city: string;
+  province: string;
 }
 // ...
 
@@ -33,12 +35,14 @@ const ListUsers = () => {
 
   const filteredUsers = users.filter(user => {
     const fullName = user.firstName + ' ' + (user.lastName || '');
+    const cityAndProvince = user.city+ ' ' + (user.province || '');
     switch (searchOption) {
       case 'name':
         return fullName.toLowerCase().includes(searchQuery.toLowerCase());
       case 'location':
-        return user.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.province.toLowerCase().includes(searchQuery.toLowerCase());
+        return cityAndProvince.toLowerCase().includes(searchQuery.toLowerCase())
+        ///user.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        // user.province.toLowerCase().includes(searchQuery.toLowerCase());
       default:
         return true;
     }
