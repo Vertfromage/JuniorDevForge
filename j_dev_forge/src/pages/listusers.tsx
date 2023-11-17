@@ -8,11 +8,15 @@ interface User {
   firstName: string;
   lastName?: string;
   role: string;
-  // Add other fields as needed
+  city: string;
+  province: string;
 }
+// ...
 
 const ListUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchOption, setSearchOption] = useState<string>('name');
 
   useEffect(() => {
     // Fetch users when the component mounts
@@ -29,26 +33,58 @@ const ListUsers = () => {
     fetchUsers();
   }, []);
 
+  const filteredUsers = users.filter(user => {
+    const fullName = user.firstName + ' ' + (user.lastName || '');
+    const cityAndProvince = user.city+ ' ' + (user.province || '');
+    switch (searchOption) {
+      case 'name':
+        return fullName.toLowerCase().includes(searchQuery.toLowerCase());
+      case 'location':
+        return cityAndProvince.toLowerCase().includes(searchQuery.toLowerCase())
+        ///user.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        // user.province.toLowerCase().includes(searchQuery.toLowerCase());
+      default:
+        return true;
+    }
+  });
+
   return (
     <Layout>
-      <h1>Users</h1>
-      {users.map((user) => (
-        <div key={user._id}>
-          <div className="card">
-            <div className="content">
-              <h5 className="user-name">{user.firstName} {user.lastName}</h5>
-              {/* <p className="email">Email: {user.email}</p> */}
-              <p className="role">Role: {user.role}</p>
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder={`Search by ${searchOption === 'name' ? 'name' : 'location'}...`}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <select onChange={(e) => setSearchOption(e.target.value)} value={searchOption}>
+          <option value="name">Name</option>
+          <option value="location">Location</option>
+        </select>
+      </div>
 
-              <div className="btn-container">
-                <Link href={`users/${user._id}`}>
-                  <button className="btn view">View Profile</button>
-                </Link>
+      {searchQuery !== '' && (
+        <>
+          <h1>Users</h1>
+          {filteredUsers.map((user) => (
+            <div key={user._id}>
+              <div className="card">
+                <div className="content">
+                  <h5 className="user-name">{user.firstName} {user.lastName}</h5>
+                  {/* <p className="email">Email: {user.email}</p> */}
+                  <p className="role">Role: {user.role}</p>
+
+                  <div className="btn-container">
+                    <Link href={`users/${user._id}`}>
+                      <button className="btn view">View Profile</button>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      ))}
+          ))}
+        </>
+      )}
     </Layout>
   );
 };

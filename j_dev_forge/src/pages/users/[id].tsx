@@ -12,17 +12,38 @@ const UserProfile = ({ user }: Props) => {
   return (
     <Layout>
       <h1>{user.firstName} {user.lastName}&apos;s Profile</h1>
-      <div className="card">
-        <div className="content">
-          <p className="user-name">{user.firstName} {user.lastName}</p>
-          {/* <p className="email">Email: {user.email}</p> */}
-          <p className="role">Role: {user.role}</p>
-          <p className="city">City: {user.city}</p>
-          <p className="province">Province: {user.province}</p>
-          <p className="description">Description: {user.description}</p>
-          <p className="website">Website: {user.website}</p>
-          <p className="linkedIn">LinkedIn: {user.linkedIn}</p>
-          <p className="github">GitHub: {user.github}</p>
+      <div>
+        <div className="conent">
+          {/* Role */}
+          <p>
+            <span className="profile-field">{user.role}</span>
+          </p>
+
+          {/* Location */}
+          <p>
+            <span className="profile-field">Located in: </span>
+            <span className="value">{user.city}, {user.province}</span>
+          </p>
+
+          {/* Description */}
+          <p>
+            <span className="profile-field">Description: </span>
+            <span className="value">{user.description}</span>
+          </p>
+          <p>
+            <span className="profile-field">Website: </span>
+            <span className="value">{user.website}</span>
+          </p>
+          <p>
+            <span className="profile-field">LinkedIn: </span>
+            <span className="value">{user.linkedIn}</span>
+          </p>
+          <p>
+            <span className="profile-field">Github: </span>
+            <span className="value">{user.github}</span>
+          </p>
+          {/* GitHub */}
+          
         </div>
       </div>
     </Layout>
