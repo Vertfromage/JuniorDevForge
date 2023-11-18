@@ -34,7 +34,7 @@ const NewUser = () => {
     firstName: splitName[0],
     lastName: splitName[1],
     email: email,
-    image_url: photo,
+    imageUrl: photo,
     role:  'Junior Developer',
     city: '',
     province:  '',

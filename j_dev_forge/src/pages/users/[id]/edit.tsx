@@ -36,6 +36,7 @@ const EditUser = () => {
 const name = data?.user?.name
 const email = data?.user?.email
 const photo = data?.user?.image
+console.log(photo)
 
 // Make sure values aren't null
 if(!name||!email||!photo){
@@ -52,7 +53,7 @@ const splitName = name.split(" ")
     firstName: splitName[0],
     lastName: splitName[1],
     email: email,
-    image_url: photo,
+    imageUrl: photo,
     role:  'Junior Developer',
     city: '',
     province:  '',

@@ -59,20 +59,23 @@ const UserSchema = new mongoose.Schema<Users>({
     },
     website:{
         type: String,
-        validate: {
-            validator: validateURL,
-            message: 'Invalid URL format',
-            }
+        // validate: {
+        //     validator: validateURL,
+        //     message: 'Invalid URL format',
+        //     }
+    },
+    imageUrl:{
+        type: String
     },
     projects:{
         type: [String] // should be the project._id
     },
     linkedIn:{
         type: String,
-        validate: {
-            validator: validateURL,
-            message: 'Invalid URL format',
-            }
+        // validate: {
+        //     validator: validateURL,
+        //     message: 'Invalid URL format',
+        //     }
     },
     github:{
         type: String,

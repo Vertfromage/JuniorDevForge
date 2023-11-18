@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Layout from "../components/layout";
 import Link from "next/link";
+import Image from 'next/image'
 
 interface User {
   _id: string;
   email: string;
+  imageUrl: string;
   firstName: string;
   lastName?: string;
   role: string;
@@ -71,9 +73,13 @@ const ListUsers = () => {
               <div className="card">
                 <div className="content">
                   <h5 className="user-name">{user.firstName} {user.lastName}</h5>
-                  {/* <p className="email">Email: {user.email}</p> */}
                   <p className="role">Role: {user.role}</p>
-
+                  {user.imageUrl ? <Image
+                    src={user?.imageUrl||""}
+                    width={100}
+                    height={100}
+                    alt="Picture of the user"
+                  /> : <></>}
                   <div className="btn-container">
                     <Link href={`users/${user._id}`}>
                       <button className="btn view">View Profile</button>
