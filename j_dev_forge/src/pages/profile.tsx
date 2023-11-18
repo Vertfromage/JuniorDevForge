@@ -6,6 +6,7 @@ import Layout from "../components/layout"
 import Image from 'next/image' //https://nextjs.org/docs/pages/api-reference/components/image
 import AccessDenied from "@/components/access-denied"
 import Link from "next/link"
+import { register } from "module";
 
 interface UserData {
   _id: string;
@@ -36,17 +37,16 @@ export default function Profile() {
         return;
       }
 
-      const response = await fetch(`/api/users?email=${email}`)
+      const response = await fetch(`/api/users/email/${email}`)
       if (!response.ok) {
         throw new Error('Failed to fetch user data')
       }
 
       const res = await response.json()
-
-      if(res.data[0]){
+      if(res.data){
         setIsRegistered(true)
       }
-      setUserData(res.data[0]);
+      setUserData(res.data);
       setOk(true)
     } catch (error) {
       console.error(error);
@@ -60,11 +60,10 @@ export default function Profile() {
           <AccessDenied />
         </Layout>
       )
-    }else{
+    }else if(!ok){
       const email = data?.user?.email || ""
       fetchData(email)
     }
-    console.log(isRegistered)
   return (
     <Layout>
       <h1>{data?.user?.name} | {data?.user?.email}</h1>

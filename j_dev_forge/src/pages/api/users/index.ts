@@ -15,6 +15,7 @@ export default async function handler(
   switch (method) {
     case 'GET':
       try {
+        console.log("find all users")
         const users = await User.find({}) /* find all the data in our database */
         res.status(200).json({ success: true, data: users })
       } catch (error) {
