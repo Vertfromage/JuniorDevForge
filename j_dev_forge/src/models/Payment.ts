@@ -33,9 +33,4 @@ const PaymentSchema = new mongoose.Schema<Payment>({
     },
 })
 
-<<<<<<< HEAD
 export default mongoose.models.Payment || mongoose.model<Payment>('Payment', PaymentSchema)
-
-=======
-export default mongoose.models.Payment || mongoose.model<Payment>('Payment', PaymentSchema)
->>>>>>> 523d5672d5cedc7bbdf8452f1d9b49c52f9ba62d

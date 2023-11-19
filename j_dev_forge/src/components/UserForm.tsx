@@ -6,7 +6,7 @@ interface FormData {
   firstName: string // required 
   lastName: string
   email: string // required
-  image_url: string // required
+  imageUrl: string // required
   role: string // required
   city: string
   province: string
@@ -20,7 +20,7 @@ interface Error {
   firstName?: string
   email?: string
   role?: string
-  image_url?: string
+  imageUrl?: string
 }
 
 type Props = {
@@ -39,7 +39,7 @@ const Form = ({ formId, userForm, forNewUser = true }: Props) => {
     firstName: userForm.firstName,
     lastName: userForm.lastName,
     email : userForm.email,
-    image_url: userForm.image_url,
+    imageUrl: userForm.imageUrl,
     role: userForm.role,
     city: userForm.city,
     province: userForm.province,
@@ -126,7 +126,7 @@ const Form = ({ formId, userForm, forNewUser = true }: Props) => {
     let err: Error = {}
     if (!form.firstName) err.firstName = 'First name is required'
     if (!form.email) err.email = 'Email is required'
-    if (!form.image_url) err.image_url = 'Image URL is required'
+    if (!form.imageUrl) err.imageUrl = 'Image URL is required'
     return err
   }
 

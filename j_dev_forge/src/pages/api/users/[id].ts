@@ -9,7 +9,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const {
-    query: { id, email },
+    query: { id },
     method,
   } = req
 
@@ -17,15 +17,14 @@ export default async function handler(
 
   switch (method) {
     case 'GET' /* Get a model by its ID */:
-      case 'GET':
       try {
         let user;
         if (id) {
+          console.log("finding by id");
           user = await User.findById(id);
-        } else if (email) {
-          user = await User.findOne({ email });
         } else {
-          return res.status(400).json({ success: false, message: 'Missing id or email parameter' });
+          console.log("Error, no id")
+          return res.status(400).json({ success: false, message: 'Missing id parameter' });
         }
 
         if (!user) {
@@ -35,7 +34,7 @@ export default async function handler(
       } catch (error) {
         res.status(400).json({ success: false });
       }
-      break
+    break
 
     case 'PUT' /* Edit a model by its ID */:
       try {
