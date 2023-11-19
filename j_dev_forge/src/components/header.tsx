@@ -67,33 +67,14 @@ export default function Header() {
       <nav>
         <ul className={styles.navItems}>
           <li className={styles.navItem}>
-            <Link href="/">Home</Link>
-          </li>
-      {/* Pets Example */}
-          <li className={styles.navItem}>
-            <Link href="/pets">Pets</Link>
-          </li>
-      {/* Pets Example */}
-      {/* NextAuth Example */}
-          <li className={styles.navItem}>
-            <Link href="/client">Client</Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link href="/server">Server</Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link href="/protected">Protected</Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link href="/api-example">API</Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link href="/admin">Admin</Link>
+            <h2><Link href="/">Junior Dev Forge</Link></h2>
           </li>
           <li className={styles.navItem}>
             <Link href="/profile">Profile</Link>
           </li>
-      {/* NextAuth Example */}
+          <li className={styles.navItem}>
+            <Link href="/listusers">Users</Link>
+          </li>
         </ul>
       </nav>
     </header>
