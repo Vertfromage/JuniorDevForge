@@ -15,7 +15,7 @@ const TeamSchema = new mongoose.Schema<Teams>({
     projectId: {
         type: String,
         required: [true, 'Please tell us the project_id for this team'],
-        maxlength: [30, 'Name cannot be more than 30 characters'],
+        maxlength: [60, 'Name cannot be more than 60 characters'],
       },
     teamMembers:{
         type: [String]
