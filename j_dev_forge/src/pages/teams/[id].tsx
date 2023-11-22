@@ -22,7 +22,7 @@ interface User {
     province: string;
   }
 
-const teamProfile = ({ team }: Props) => {
+const TeamProfile = ({ team }: Props) => {
   const [members, setMembers] = useState<User[]>([]);
   console.log(team)
 
@@ -33,9 +33,6 @@ const teamProfile = ({ team }: Props) => {
       const response = await fetch('/api/users/'+id);
       const data = await response.json();
       return data.data
-    //   const updatedMembers = [...members, data.data]
-    //   console.log(updatedMembers)
-    //   setMembers(updatedMembers)
     } catch (error) {
       console.error('Error fetching user:', error);
       return null
@@ -51,8 +48,10 @@ const teamProfile = ({ team }: Props) => {
         setMembers(updatedMembers);
       }
   }
+  setMembers([])
   fetchAllMembers()
-}, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []) 
 console.log(members)
 
   return (
@@ -61,16 +60,42 @@ console.log(members)
       {
         members.map( (mem)=>(
             <div key={mem._id}>
+                  <div className="membersButton">
+                  <style jsx>{`
+                                .membersButton {
+                                  width: 100%;
+                                  text-align: center;
+                                  margin: 10px; 
+                                }
+
+                                .btn {
+                                  width: 100%;
+                                  padding: 10px; 
+                                  text-align: center;
+                                  text-decoration: none;
+                                  display: block;
+                                  font-size: 16px;
+                                  cursor: pointer;
+                                  border: 1px solid #ccc;
+                                }
+                                .btn:hover {
+                                  background-color: #e0e0e0; 
+                                }
+
+                                h2 {
+                                  margin-bottom: 5px; 
+                                }
+                              `}
+                  </style>
+                    <Link href={`/users/${mem._id}`}>
+                      <button className="btn view">
                 <h2>{mem.firstName} {mem.lastName}</h2>
                 {mem.imageUrl ? <Image
                     src={mem?.imageUrl||""}
                     width={100}
                     height={100}
                     alt="Picture of the user"
-                  /> : <></>}
-                  <div className="btn-container">
-                    <Link href={`users/${mem._id}`}>
-                      <button className="btn view">View Profile</button>
+                  /> : <></>}</button>
                     </Link>
                   </div>
             </div>
@@ -116,4 +141,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
 
 
-export default teamProfile;
+export default TeamProfile;
