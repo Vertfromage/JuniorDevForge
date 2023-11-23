@@ -1,16 +1,24 @@
-//Similar to list users, projects are listed. 
 
 import { useEffect, useState } from 'react';
 import Layout from "../components/layout";
+import Image from 'next/image';
+import mongoose from 'mongoose';
 import Link from "next/link";
 
 interface Project {
-  _id: string;
-  name: string;
-  price: string;
+  project_id: string;
+  owner_id: mongoose.Types.ObjectId;
+  name:string;
+  description: string;
+  category: string;
+  price: number;
   location: string;
+  tech_stack: string[];
+  website: string;
+  status: string;
+  members: mongoose.Types.ObjectId[];
+  payment_received: boolean;
 }
-// ...
 
 const ListProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -24,6 +32,7 @@ const ListProjects = () => {
         const response = await fetch('/api/projects');
         const data = await response.json();
         setProjects(data.data); // Assuming data is structured as { success: true, data: projects }
+
       } catch (error) {
         console.error('Error fetching projects:', error);
       }
@@ -64,22 +73,23 @@ const ListProjects = () => {
         <>
           <h1>Projects</h1>
           {filteredProjects.map((project) => (
-            <div key={project._id}>
+            <div key={project.project_id}>
               <div className="card">
                 <div className="content">
-                  <h5 className="project-name">{project.name}</h5>
-                  {/* <p className="email">Email: {user.email}</p> */}
+                <h5 className="project-name">{project.name}</h5>
+                  <h5 className="project-description">{project.description}</h5>
+                  <p className="category">Category: {project.category}</p>
                   <p className="price">Price: {project.price}</p>
                   <p className="location">Location: {project.location}</p>
-
+                  {/* Display other project details as needed */}
                   <div className="btn-container">
-                    <Link href={`projects/${project._id}`}>
+                    {/* Add buttons or links as needed */}
+                    <Link href={`projects/${project.project_id}`}>
                       <button className="btn view">View Project</button>
-                    </Link>
+                    </Link></div>
                   </div>
                 </div>
               </div>
-            </div>
           ))}
         </>
       )}
