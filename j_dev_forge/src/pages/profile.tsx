@@ -6,7 +6,6 @@ import Layout from "../components/layout"
 import Image from 'next/image' //https://nextjs.org/docs/pages/api-reference/components/image
 import AccessDenied from "@/components/access-denied"
 import Link from "next/link"
-import { register } from "module";
 
 interface UserData {
   _id: string;
