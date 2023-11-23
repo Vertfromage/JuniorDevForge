@@ -12,6 +12,7 @@ github Oauth: https://github.com/settings/developers
 -Save the client ID and client secret for your env.local variables
 -set the homepage url to: http://localhost:3000/
 -set the call back url to: http://localhost:3000/api/auth/callback/github
+- for next auth secret: https://generate-secret.vercel.app/32
 
 - change the .env.local.example to .env.local and fill in the variables
 

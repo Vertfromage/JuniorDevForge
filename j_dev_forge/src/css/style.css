@@ -193,6 +193,6 @@ li {
   display: block;
 }
 
-.profile-field {
+.profile-field , .project-description {
   font-weight: bold;
 }

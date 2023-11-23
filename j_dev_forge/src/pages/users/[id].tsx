@@ -21,7 +21,7 @@ const UserProfile = ({ user }: Props) => {
     /> : <></>}
       <div>
         
-        <div className="conent">
+        <div className="content">
           {/* Role */}
           <p>
             <span className="profile-field">{user.role}</span>
