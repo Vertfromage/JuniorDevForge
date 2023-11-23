@@ -75,6 +75,9 @@ export default function Header() {
           <li className={styles.navItem}>
             <Link href="/listusers">Users</Link>
           </li>
+          <li className={styles.navItem}>
+            <Link href="/listprojects">Projects</Link>
+          </li>
         </ul>
       </nav>
     </header>
