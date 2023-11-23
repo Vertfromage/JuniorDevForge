@@ -5,7 +5,7 @@ function validateURL(value: string) {
     return validator.isURL(value, { require_tld: false });
 }
 
-export interface Project extends Document {
+export interface Projects extends Document {
     project_id: string;
     owner_id: mongoose.Types.ObjectId; // References Users
     description: string;
@@ -70,6 +70,4 @@ const ProjectSchema: Schema = new Schema<Project>({
     },
 });
 
-const Projects = mongoose.model<Project>('Projects', ProjectSchema);
-
-export default Projects;
+export default mongoose.models.Project || mongoose.model<Projects>('Project', ProjectSchema)

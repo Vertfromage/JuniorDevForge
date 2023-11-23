@@ -1,12 +1,14 @@
-
+// pages/listprojects.tsx
+import { useSession } from "next-auth/react"
 import { useEffect, useState } from 'react';
-import Layout from "../components/layout";
+import Layout from '../components/layout';
+import Link from 'next/link';
+import AccessDenied from "@/components/access-denied"
 import Image from 'next/image';
 import mongoose from 'mongoose';
-import Link from "next/link";
 
 interface Project {
-  project_id: string;
+  _id: string;
   owner_id: mongoose.Types.ObjectId;
   name:string;
   description: string;
@@ -16,31 +18,41 @@ interface Project {
   tech_stack: string[];
   website: string;
   status: string;
-  members: mongoose.Types.ObjectId[];
+  // members: mongoose.Types.ObjectId[]; //This is implemented in teams branch
   payment_received: boolean;
 }
 
 const ListProjects = () => {
+  const { data } = useSession();
   const [projects, setProjects] = useState<Project[]>([]);
+  const [ok, setOk] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchOption, setSearchOption] = useState<string>('name');
 
   useEffect(() => {
-    // Fetch project when the component mounts
     const fetchProjects = async () => {
       try {
-        const response = await fetch('/api/projects');
+        const response = await fetch('/api/projects'); // Adjust the API endpoint as per your project
         const data = await response.json();
         setProjects(data.data); // Assuming data is structured as { success: true, data: projects }
-
       } catch (error) {
         console.error('Error fetching projects:', error);
       }
     };
-
     fetchProjects();
   }, []);
 
+
+      // If no session exists, display access denied message
+      if (!data) {
+        return (
+          <Layout>
+            <AccessDenied />
+          </Layout>
+        )
+      }
+
+      
   const filteredProjects = projects.filter(project => {
     const name = project.name;
     const location = project.location;
@@ -53,6 +65,7 @@ const ListProjects = () => {
         return true;
     }
   });
+
 
   return (
     <Layout>
@@ -68,33 +81,31 @@ const ListProjects = () => {
           <option value="location">Location</option>
         </select>
       </div>
-
-      {searchQuery !== '' && (
-        <>
-          <h1>Projects</h1>
+      <ul>
+      <h1>Projects</h1>
           {filteredProjects.map((project) => (
-            <div key={project.project_id}>
-              <div className="card">
-                <div className="content">
-                <h5 className="project-name">{project.name}</h5>
-                  <h5 className="project-description">{project.description}</h5>
-                  <p className="category">Category: {project.category}</p>
-                  <p className="price">Price: {project.price}</p>
-                  <p className="location">Location: {project.location}</p>
-                  {/* Display other project details as needed */}
-                  <div className="btn-container">
-                    {/* Add buttons or links as needed */}
-                    <Link href={`projects/${project.project_id}`}>
-                      <button className="btn view">View Project</button>
-                    </Link></div>
-                  </div>
+          <li key={project._id}>
+            <div className="card">
+              <div className="content">
+              <h5 className="project-name">{project.name}</h5>
+                <p className="project-description">{project.description}</p>
+                <p className="project-category">Category: {project.category}</p>
+                <p className="project-price">Price: {project.price}</p>
+                <p className="project-location">Location: {project.location}</p>
+                {/* Add more project details as needed */}
+                <div className="btn-container">
+                  <Link href={`/projects/${project._id}`}>
+                    <button className="btn view">View Project</button>
+                  </Link>
                 </div>
               </div>
-          ))}
-        </>
-      )}
+            </div>
+          </li>
+        ))}
+      </ul>
     </Layout>
   );
 };
 
 export default ListProjects;
+
