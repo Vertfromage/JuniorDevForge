@@ -1,13 +1,13 @@
 import { User as NextAuthUser } from "next-auth"; // Rename User to NextAuthUser
 import Layout from "../../components/layout";
 import dbConnect from '../../lib/dbConnect';
-import Project, { Project as ProjectType } from '../../models/Project';
+import Project, { Projects as ProjectType } from '../../models/Project';
 import User, { Users } from '../../models/User';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
 interface Props {
   project: ProjectType;
-  user: Users;
+  // user: Users; // This was causing a type error, but it wasn't actually being used. 
 }
 
 const ProjectDetails = ({ project }: Props) => {
@@ -18,7 +18,7 @@ const ProjectDetails = ({ project }: Props) => {
         {/* Owner */}
         <p>
           <span className="profile-field">Owner: </span>
-          <span className="value">{project.owner.firstName} {project.owner.lastName}</span>
+          {/* Broken: <span className="value">{project.owner.firstName} {project.owner.lastName}</span> */}
         </p>
 
         {/* Description */}

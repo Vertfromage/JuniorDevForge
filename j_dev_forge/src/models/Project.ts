@@ -19,7 +19,7 @@ export interface Projects extends Document {
     payment_received: boolean;
 }
 
-const ProjectSchema: Schema = new Schema<Project>({
+const ProjectSchema: Schema = new Schema<Projects>({
     project_id: {
         type: String,
         required: true,
