@@ -81,7 +81,7 @@ const ListUsers = () => {
                     alt="Picture of the user"
                   /> : <></>}
                   <div className="btn-container">
-                    <Link href={`users/${user._id}`}>
+                    <Link href={`./users/${user._id}`}>
                       <button className="btn view">View Profile</button>
                     </Link>
                   </div>

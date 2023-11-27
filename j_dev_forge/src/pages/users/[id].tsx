@@ -19,9 +19,7 @@ const UserProfile = ({ user }: Props) => {
       height={100}
       alt="Picture of the user"
     /> : <></>}
-      <div>
-        
-        <div className="content">
+        <div /*className="content" <- broken css*/>
           {/* Role */}
           <p>
             <span className="profile-field">{user.role}</span>
@@ -53,7 +51,7 @@ const UserProfile = ({ user }: Props) => {
           {/* GitHub */}
           
         </div>
-      </div>
+
     </Layout>
   );
 };

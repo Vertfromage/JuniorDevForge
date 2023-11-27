@@ -29,7 +29,8 @@ export default function Profile() {
   const [isRegistered, setIsRegistered] = useState(false)
   const [ok, setOk] = useState(false)
 
-  const fetchData = async (email: string) => {
+  const fetchData = async () => {
+    const email = data?.user?.email || ""
     try {
       if (!email) {
         console.error('Missing email parameter')
@@ -60,8 +61,7 @@ export default function Profile() {
         </Layout>
       )
     }else if(!ok){
-      const email = data?.user?.email || ""
-      fetchData(email)
+      fetchData()
     }
   return (
     <Layout>

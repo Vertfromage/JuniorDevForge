@@ -18,7 +18,8 @@ const NewTeam = () => {
   
   const TeamData= {
     projectId : "",
-    teamMembers :[]
+    teamMembers :[],
+    teamLead: ""
  }
 
   return (
