@@ -83,7 +83,7 @@ const ProjectDetails = ({ project }: Props) => {
             <span className="value">{project.payment_received ? 'Yes' : 'No'}</span>
           </p>
 
-          <iframe src={"/teams/"+project.team} style={{height:'600px'}}>
+          <iframe id="myIframe" src={"/teams/"+project.team} style={{height:'600px'}}>
 
           </iframe>
         </div>
