@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./teamProfileStyles.module.css";
 import { useRouter } from 'next/router'
+import { useSession } from "next-auth/react"
 
 interface Props {
   team: Teams;
@@ -32,6 +33,34 @@ const TeamProfile = ({ team }: Props) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [showRemoveAndAddButtons, setShowRemoveAndAddButtons] = useState(false);
   const router = useRouter()
+
+  const { data } = useSession()
+  const [userData, setUserData] = useState<User | null>(null);
+  const [isTeamLead, setIsTeamLead] = useState(false)
+
+  const fetchProfile = async () => {
+    const email = data?.user?.email || null
+    try {
+      if (!email) {
+        console.error('Missing email parameter')
+        return;
+      }
+
+      const response = await fetch(`/api/users/email/${email}`)
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data')
+      }
+
+      const res = await response.json()
+      setUserData(res.data);
+      setIsTeamLead(team.teamLead===res.data._id)
+      if(!(team.teamLead===res.data._id)){
+        setSelectedUserId(res.data._id)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     // Fetch user, team members, and available users on mount or team changes
@@ -135,7 +164,6 @@ const TeamProfile = ({ team }: Props) => {
   
       if (data.success) {
         console.log('Member removed successfully!');
-        router.reload();
       } else {
         console.error('Error removing member:', data.error);
       }
@@ -143,9 +171,16 @@ const TeamProfile = ({ team }: Props) => {
       console.error('Error removing member:', error);
     }
   };
+
+  if(!userData && data){
+    fetchProfile()
+  }
   
   return (
     <div>
+      <p>Current user: {userData && userData?.firstName }</p>
+      <p>Team Lead {team.teamLead}</p>
+      <p>Is team Lead? {isTeamLead ? "True":"False"}</p>
       <h1>Team</h1>
       {/* Display team members */}
       {members.map((mem) => (
@@ -168,7 +203,7 @@ const TeamProfile = ({ team }: Props) => {
                 )}
               </button>
             </Link>
-            {showRemoveAndAddButtons && (
+            {(showRemoveAndAddButtons && isTeamLead ) && (
               <span
                 className={styles.removeButton}
                 onClick={() => handleRemoveMember(mem._id)}
@@ -182,7 +217,7 @@ const TeamProfile = ({ team }: Props) => {
 
       {/* Display the "Add Member" button */}
       <span>
-      {showRemoveAndAddButtons && (
+      {(showRemoveAndAddButtons && isTeamLead ) && (
        <div className={styles.addMemberButton}>
        <span onClick={handleAddMember}>
          Add Member
@@ -193,13 +228,15 @@ const TeamProfile = ({ team }: Props) => {
       )}
       </span>
       {/* Display the "Edit Team" button */}
-      <div>
+      {isTeamLead ? 
+      (<div>
       <span>
         <button className={styles.editTeamButton} onClick={handleEditTeam}>
           Edit Team
         </button>
         </span>
-        {isDropdownVisible && (
+        {(showRemoveAndAddButtons && isTeamLead ) && (
+          
           <div className={styles.userDropdown}>
             {/* Display a dropdown menu with available users */}
             <select
@@ -215,7 +252,12 @@ const TeamProfile = ({ team }: Props) => {
             </select>
           </div>
         )}
-      </div>
+      </div>):
+      (<div>
+        <button className={styles.editTeamButton} onClick={handleAddMember}>
+          Join Team
+        </button>
+      </div>)}
     </div>
   );
 };
