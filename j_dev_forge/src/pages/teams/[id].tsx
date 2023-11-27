@@ -178,9 +178,9 @@ const TeamProfile = ({ team }: Props) => {
   
   return (
     <div>
-      <p>Current user: {userData && userData?.firstName }</p>
+      {/* <p>Current user: {userData && userData?.firstName }</p>
       <p>Team Lead {team.teamLead}</p>
-      <p>Is team Lead? {isTeamLead ? "True":"False"}</p>
+      <p>Is team Lead? {isTeamLead ? "True":"False"}</p> */}
       <h1>Team</h1>
       {/* Display team members */}
       {members.map((mem) => (
