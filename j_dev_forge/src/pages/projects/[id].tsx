@@ -67,7 +67,7 @@ const ProjectDetails = ({ project }: Props) => {
           {/* Members */}
           <p>
             <span className="profile-field">Members: </span>
-            <span className="value">{project.members.join(', ')}</span>
+            {/* <span className="value">{project.members.join(', ')}</span> */}
           </p>
 
           {/* Payment Received */}
