@@ -6,6 +6,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./teamProfileStyles.module.css";
+import { useRouter } from 'next/router'
 
 interface Props {
   team: Teams;
@@ -30,6 +31,7 @@ const TeamProfile = ({ team }: Props) => {
   const [availableUsers, setAvailableUsers] = useState<User[]>([]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [showRemoveAndAddButtons, setShowRemoveAndAddButtons] = useState(false);
+  const router = useRouter()
 
   useEffect(() => {
     // Fetch user, team members, and available users on mount or team changes
@@ -109,6 +111,7 @@ const TeamProfile = ({ team }: Props) => {
           // Refresh the component or update the team members state
           // based on the successful addition
           console.log('Member added successfully!');
+          router.reload();
         } else {
           console.error('Error adding member:', data.error);
         }
@@ -132,6 +135,7 @@ const TeamProfile = ({ team }: Props) => {
   
       if (data.success) {
         console.log('Member removed successfully!');
+        router.reload();
       } else {
         console.error('Error removing member:', data.error);
       }
@@ -141,8 +145,8 @@ const TeamProfile = ({ team }: Props) => {
   };
   
   return (
-    <Layout>
-      <h1>Team Page: {team.projectId}</h1>
+    <div>
+      <h1>Team</h1>
       {/* Display team members */}
       {members.map((mem) => (
         <div key={mem._id}>
@@ -212,7 +216,7 @@ const TeamProfile = ({ team }: Props) => {
           </div>
         )}
       </div>
-    </Layout>
+    </div>
   );
 };
 

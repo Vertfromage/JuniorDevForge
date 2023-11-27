@@ -4,13 +4,21 @@ import dbConnect from '../../lib/dbConnect';
 import Project, { Projects as ProjectType } from '../../models/Project';
 import User, { Users } from '../../models/User';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import TeamProfile from "../teams/[id]";
 
 interface Props {
   project: ProjectType;
   // user: Users; // This was causing a type error, but it wasn't actually being used. 
 }
 
+
 const ProjectDetails = ({ project }: Props) => {
+  const team = {
+     _id:"655e1f88f4ba3e8b56af9696",
+     projectId :"",
+     teamMembers :[],
+  }
+
   return (
     <Layout>
       <h1>{project.description}</h1>
@@ -67,7 +75,6 @@ const ProjectDetails = ({ project }: Props) => {
           {/* Members */}
           <p>
             <span className="profile-field">Members: </span>
-            {/* <span className="value">{project.members.join(', ')}</span> */}
           </p>
 
           {/* Payment Received */}
@@ -75,6 +82,10 @@ const ProjectDetails = ({ project }: Props) => {
             <span className="profile-field">Payment Received: </span>
             <span className="value">{project.payment_received ? 'Yes' : 'No'}</span>
           </p>
+
+          <iframe src={"/teams/"+project.team} style={{height:'600px'}}>
+
+          </iframe>
         </div>
     </Layout>
   );

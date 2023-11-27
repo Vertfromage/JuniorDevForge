@@ -15,7 +15,8 @@ export interface Projects extends Document {
     tech_stack: string[];
     website: string;
     status: string;
-    members: mongoose.Types.ObjectId[]; // Array of user IDs referencing Users
+    members: mongoose.Types.ObjectId[];//TODO: delete
+    team: string; // the id of the team
     payment_received: boolean;
 }
 

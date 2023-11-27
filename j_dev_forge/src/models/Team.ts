@@ -9,6 +9,7 @@ export interface Teams extends mongoose.Document {
     //_id: mongoose.Types.ObjectId;
      projectId : string
      teamMembers : string[]
+     teamLead: string
 }
 
 const TeamSchema = new mongoose.Schema<Teams>({
@@ -20,6 +21,9 @@ const TeamSchema = new mongoose.Schema<Teams>({
     teamMembers:{
         type: [String]
     },
+    teamLead:{
+        type: String,
+    }
 })
 
 export default mongoose.models.Team || mongoose.model<Teams>('Team', TeamSchema)
