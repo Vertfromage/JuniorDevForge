@@ -37,6 +37,7 @@ const TeamProfile = ({ team }: Props) => {
   const { data } = useSession()
   const [userData, setUserData] = useState<User | null>(null);
   const [isTeamLead, setIsTeamLead] = useState(false)
+  const [isMember, setIsMember] = useState(false)
 
   const fetchProfile = async () => {
     const email = data?.user?.email || null
@@ -54,6 +55,7 @@ const TeamProfile = ({ team }: Props) => {
       const res = await response.json()
       setUserData(res.data);
       setIsTeamLead(team.teamLead===res.data._id)
+      checkIsMember(res.data._id)
       if(!(team.teamLead===res.data._id)){
         setSelectedUserId(res.data._id)
       }
@@ -61,6 +63,10 @@ const TeamProfile = ({ team }: Props) => {
       console.error(error);
     }
   };
+
+  const checkIsMember = (id: string | undefined) =>{
+    setIsMember(members.some(mem => mem._id === id));
+  }
 
   useEffect(() => {
     // Fetch user, team members, and available users on mount or team changes
@@ -140,7 +146,7 @@ const TeamProfile = ({ team }: Props) => {
           // Refresh the component or update the team members state
           // based on the successful addition
           console.log('Member added successfully!');
-          router.reload();
+          router.reload()
         } else {
           console.error('Error adding member:', data.error);
         }
@@ -164,6 +170,7 @@ const TeamProfile = ({ team }: Props) => {
   
       if (data.success) {
         console.log('Member removed successfully!');
+        router.reload()
       } else {
         console.error('Error removing member:', data.error);
       }
@@ -175,6 +182,7 @@ const TeamProfile = ({ team }: Props) => {
   if(!userData && data){
     fetchProfile()
   }
+  console.log(isMember)
   
   return (
     <div>
@@ -254,9 +262,13 @@ const TeamProfile = ({ team }: Props) => {
         )}
       </div>):
       (<div>
+        {isMember ? <button className={styles.editTeamButton} onClick={() => handleRemoveMember(userData?._id||"")}>
+          Leave Team
+        </button>
+        :
         <button className={styles.editTeamButton} onClick={handleAddMember}>
           Join Team
-        </button>
+        </button> }
       </div>)}
     </div>
   );
