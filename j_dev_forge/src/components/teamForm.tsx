@@ -5,6 +5,7 @@ import { mutate } from 'swr' //https://swr.vercel.app/
 interface TeamData {
     projectId : string
     teamMembers : string[]
+    teamLead : string
  }
 
 type Props = {
@@ -22,6 +23,7 @@ const Form = ({ formId, teamForm, forNewTeam = true }: Props) => {
     const [form, setForm] = useState({
     projectId : teamForm.projectId,
     teamMembers : teamForm.teamMembers,
+    teamLead : teamForm.teamLead
     })
 
     /* The PUT method edits an existing entry in the mongodb database. */
