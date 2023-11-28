@@ -6,6 +6,7 @@ function validateURL(value: string) {
 }
 
 export interface Projects extends Document {
+    name: string;
     project_id: string;
     owner_id: mongoose.Types.ObjectId; // References Users
     description: string;

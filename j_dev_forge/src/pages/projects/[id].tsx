@@ -23,11 +23,6 @@ const ProjectDetails = ({ project }: Props) => {
     <Layout>
       <h1>{project.description}</h1>
       <div>
-        {/* Owner */}
-        <p>
-          <span className="profile-field">Owner: </span>
-          {/* Broken: <span className="value">{project.owner.firstName} {project.owner.lastName}</span> */}
-        </p>
 
         {/* Description */}
         <p>

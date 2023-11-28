@@ -70,13 +70,16 @@ export default function Header() {
             <h2><Link href="/">Junior Dev Forge</Link></h2>
           </li>
           <li className={styles.navItem}>
-            <Link href="/profile">Profile</Link>
+            <Link href="/profile">Profile</Link>  
           </li>
           <li className={styles.navItem}>
             <Link href="/users">Users</Link>
           </li>
           <li className={styles.navItem}>
             <Link href="/projects">Projects</Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link href="/postproject">Post a Project</Link>
           </li>
         </ul>
       </nav>
