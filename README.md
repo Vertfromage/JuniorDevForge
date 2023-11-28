@@ -1,6 +1,10 @@
 # JuniorDevForge
 Our mission is to empower junior developers by providing them with a platform to form teams and collaboratively build real-world projects.
 
+# Live Site
+
+[junior-dev-forge.vercel.app](https://junior-dev-forge.vercel.app/)
+
 # Run locally
 - clone the project locally
 - First you'll need to setup your own versions of mongoDB and github Oauth app. 
