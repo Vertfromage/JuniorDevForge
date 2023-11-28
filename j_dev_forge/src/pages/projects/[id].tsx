@@ -80,7 +80,6 @@ const ProjectDetails = ({ project }: Props) => {
   );
 };
 
-// ... (import statements remain unchanged)
 
 export const getServerSideProps: GetServerSideProps<Props> = async (
     context: GetServerSidePropsContext

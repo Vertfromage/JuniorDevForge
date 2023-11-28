@@ -24,7 +24,7 @@ const ListProjects = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('/api/projects'); // Adjust the API endpoint as per your project
+        const response = await fetch('/api/projects');
         const data = await response.json();
         setProjects(data.data); // Assuming data is structured as { success: true, data: projects }
       } catch (error) {
